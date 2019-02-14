@@ -25,7 +25,7 @@ public class RabbitSender {
 //    private RabbitTemplate template;
     
    @Autowired
-   private AmqpTemplate amqpTemplate;
+   private RabbitTemplate rabbitTemplate1;
    
    @Value("${jsa.rabbitmq.exchange}")
    private String exchange;
@@ -33,14 +33,15 @@ public class RabbitSender {
    @Value("${jsa.rabbitmq.routingkey}")
    private String routingKey;    
 
-    @Autowired
-    private Queue queue;
+   @Value("${jsa.rabbitmq.queue}")
+   private String queueName;    
+
+//    @Autowired
+//    private Queue queue;
 
     public void send(String message) {
-        //String QUEUE_NAME = RabbitConfig.QUEUE_NAME;
         Date date = new Date();
-        //String message = "Hello World!";
-        amqpTemplate.convertAndSend(exchange, routingKey, message);
+        rabbitTemplate1.convertAndSend(exchange, routingKey, message);
         System.out.println(" - Sent " + message + " date: " + date);
     }
     
